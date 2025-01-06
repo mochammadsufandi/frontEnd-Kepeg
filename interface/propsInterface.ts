@@ -45,6 +45,7 @@ export type DropDownObject = {
 
 export interface DropDownProps {
   data: DropDownObject[];
+  disabled: boolean;
   name: string;
   onChange: ({ name, value }: DropDownObject) => void;
 }

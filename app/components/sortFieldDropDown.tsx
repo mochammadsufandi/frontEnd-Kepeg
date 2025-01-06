@@ -20,9 +20,9 @@ export default function SortFieldDropDown({
   ] as Array<keyof SortFields>;
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block z-[40]">
       <button
-        className="flex items-center px-4 py-2 bg-dropdownSelectField text-white rounded"
+        className="flex items-center justify-center w-[450px] px-4 py-2 bg-dropdownSelectField text-white rounded"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span> Select Field For Sorting</span>
@@ -35,7 +35,7 @@ export default function SortFieldDropDown({
         ></Image>
       </button>
       {isOpen && (
-        <div className="absolute bg-background shadow-md rounded-md w-64 mt-2 p-4">
+        <div className="absolute bg-background shadow-md rounded-md w-[400px] ml-[50px] p-4">
           <div className="mb-4">
             {filters.map((field) => (
               <button

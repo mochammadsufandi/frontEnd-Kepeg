@@ -1,9 +1,13 @@
+import DropDown from "@/app/components/dropdown";
+import { DropDownObject } from "@/interface/propsInterface";
+
 type RenderFieldParams = {
   params: string;
-  onChangeField: (params: string, value: string) => void;
+  disabled: boolean;
+  onChangeField: ({ name, value }: DropDownObject) => void | (() => void);
 };
 
-export function renderFilterField({ params, onChangeField }: RenderFieldParams) {
+export function renderFilterField({ params, onChangeField, disabled }: RenderFieldParams) {
   if (
     params === "tanggalLahir" ||
     params === "pangkatSejak" ||
@@ -15,38 +19,84 @@ export function renderFilterField({ params, onChangeField }: RenderFieldParams) 
   ) {
     return (
       <>
-        <label className="block text-sm font-medium">{converterFieldToNameButton(params)}</label>
+        <label className="block text-sm font-medium text-whiteText">
+          {converterFieldToNameButton(params)}
+        </label>
         <input
           type="date"
           placeholder={`Select ${converterFieldToNameButton(params)}`}
           onChange={(ev) => {
-            onChangeField(params, ev.target.value);
+            onChangeField({ name: params, value: ev.target.value });
           }}
+          disabled={disabled}
+          style={{ height: "2.4rem" }}
+          className="text-center rounded-md"
         ></input>
       </>
     );
   }
-  if (
-    params === "gender" ||
-    params === "pendidikanTerakhir" ||
-    params === "promotionChecking" ||
-    params === "marker" ||
-    params === "jaksa" ||
-    params === "unitId"
-  ) {
+  if (params === "gender") {
+    const data = [
+      { name: "Laki-Laki", value: "L" },
+      { name: "Perempuan", value: "P" },
+    ];
     return (
       <>
-        <label className="block text-sm font-medium">{converterFieldToNameButton(params)}</label>
-        <input
-          type="number"
-          placeholder={`Select ${converterFieldToNameButton(params)}`}
-          onChange={(ev) => {
-            onChangeField(params, ev.target.value);
-          }}
-        ></input>
+        <label className="block text-sm font-medium text-whiteText">
+          {converterFieldToNameButton(params)}
+        </label>
+        <DropDown name={params} data={data} onChange={onChangeField} disabled={disabled} />
       </>
     );
   }
+  if (params === "pendidikanTerakhir") {
+    const data = [
+      { name: "SMA", value: "SMA" },
+      { name: "DIII", value: "DIII" },
+      { name: "DIV", value: "DIV" },
+      { name: "Sarjana", value: "S." },
+      { name: "Magister", value: "M." },
+      { name: "Doktor", value: "Dr." },
+    ];
+    return (
+      <>
+        <label className="block text-sm font-medium text-whiteText">
+          {converterFieldToNameButton(params)}
+        </label>
+        <DropDown name={params} data={data} onChange={onChangeField} disabled={disabled} />
+      </>
+    );
+  }
+  if (params === "marker" || params === "jaksa" || params === "promotionChecking") {
+    const data = [
+      { name: "true", value: "true" },
+      { name: "false", value: "false" },
+    ];
+    return (
+      <>
+        <label className="block text-sm font-medium text-whiteText">
+          {converterFieldToNameButton(params)}
+        </label>
+        <DropDown name={params} data={data} onChange={onChangeField} disabled={disabled} />
+      </>
+    );
+  }
+  if (params === "unitId") {
+    const data = [
+      { name: "Kejati Jambi", value: "1" },
+      { name: "Kejari Jambi", value: "2" },
+      { name: "Kejari Muaro Jambi", value: "3" },
+    ];
+    return (
+      <>
+        <label className="block text-sm font-medium text-whiteText">
+          {converterFieldToNameButton(params)}
+        </label>
+        <DropDown name={params} data={data} onChange={onChangeField} disabled={disabled} />
+      </>
+    );
+  }
+
   if (
     params === "tempatLahir" ||
     params === "originalRank" ||
@@ -55,20 +105,25 @@ export function renderFilterField({ params, onChangeField }: RenderFieldParams) 
   ) {
     return (
       <>
-        <label className="block text-sm font-medium">{converterFieldToNameButton(params)}</label>
+        <label className="block text-sm font-medium text-whiteText">
+          {converterFieldToNameButton(params)}
+        </label>
         <input
           type="text"
           placeholder={`Select ${converterFieldToNameButton(params)}`}
           onChange={(ev) => {
-            onChangeField(params, ev.target.value);
+            onChangeField({ name: params, value: ev.target.value });
           }}
+          disabled={disabled}
+          style={{ height: "2.4rem" }}
+          className="text-center rounded-md"
         ></input>
       </>
     );
   }
 }
 
-export function converterFieldToNameButton(params: string) {
+export function converterFieldToNameButton(params: string): string {
   switch (params) {
     case "nama":
       return "Nama";
@@ -104,5 +159,7 @@ export function converterFieldToNameButton(params: string) {
       return "Keterangan Tambahan";
     case "unitId":
       return "Satuan Kerja";
+    default:
+      return "";
   }
 }
