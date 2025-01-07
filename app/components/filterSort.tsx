@@ -118,6 +118,7 @@ const FilterSort = () => {
                 name={field}
                 onChange={onChangeSortField}
                 disabled={sortFieldLock}
+                required={false}
               />
             </div>
           ))}

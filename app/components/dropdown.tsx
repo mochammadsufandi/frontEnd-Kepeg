@@ -1,7 +1,7 @@
 import { DropDownProps } from "@/interface/propsInterface";
 import { converterFieldToNameButton } from "@/utils/converter";
 
-const DropDown = ({ data, name, disabled, onChange }: DropDownProps) => {
+const DropDown = ({ data, name, disabled, required, onChange }: DropDownProps) => {
   return (
     <div
       className={`${
@@ -11,6 +11,7 @@ const DropDown = ({ data, name, disabled, onChange }: DropDownProps) => {
       <select
         name={name}
         disabled={disabled}
+        required={required}
         onChange={(ev) => onChange({ name, value: ev.target.value })}
         className="w-[75%] h-[80%] border-black border-2 rounded-md"
       >

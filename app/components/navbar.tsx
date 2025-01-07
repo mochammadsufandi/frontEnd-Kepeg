@@ -15,14 +15,17 @@ export const Navbar = () => {
         </Link>
       </div>
 
-      <h1 className="text-navbarText font-semibold text-[18px] ml-[8rem]">
-        <a href={"/"}>HOME</a>
+      <h1 className="text-navbarText font-semibold text-[18px] ml-[8rem]  hover:border-b-[3px] hover:border-white transition-all duration-200 ">
+        <Link href={"/"}>HOME</Link>
       </h1>
-      <h1 className="text-navbarText font-semibold text-[18px] ml-[8rem]">
-        <a href={"/result-export"}>RESULT & EXPORT </a>
+      <h1 className="text-navbarText font-semibold text-[18px] ml-[8rem] hover:border-b-[3px] hover:border-white transition-all duration-200">
+        <Link href={"/result-export"}>RESULT & EXPORT </Link>
       </h1>
-      <h1 className="text-navbarText font-semibold text-[18px] ml-[8rem]">
-        <a href={"/edit"}>EDIT</a>
+      <h1 className="text-navbarText font-semibold text-[18px] ml-[8rem] hover:border-b-[3px] hover:border-white transition-all duration-200">
+        <Link href={"/edit"}>EDIT</Link>
+      </h1>
+      <h1 className="text-navbarText font-semibold text-[18px] ml-[8rem] hover:border-b-[3px] hover:border-white transition-all duration-200">
+        <Link href={"/import-input"}>IMPORT & INPUT</Link>
       </h1>
     </nav>
   );

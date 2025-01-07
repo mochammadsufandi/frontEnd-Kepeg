@@ -46,6 +46,26 @@ export type DropDownObject = {
 export interface DropDownProps {
   data: DropDownObject[];
   disabled: boolean;
+  required: boolean;
   name: string;
   onChange: ({ name, value }: DropDownObject) => void;
 }
+
+export type CustomInputProps = {
+  field: string;
+  type: string;
+  name: string;
+  required: boolean;
+  placeholder: string;
+};
+
+export type FormInputProps = {
+  data: CustomInputProps[];
+};
+
+export type DropDownFormInputProps = {
+  name: string;
+  data: DropDownObject[];
+  disabled: boolean;
+  required: boolean;
+};

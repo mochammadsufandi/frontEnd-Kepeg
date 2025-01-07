@@ -45,7 +45,13 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
         <label className="block text-sm font-medium text-whiteText">
           {converterFieldToNameButton(params)}
         </label>
-        <DropDown name={params} data={data} onChange={onChangeField} disabled={disabled} />
+        <DropDown
+          name={params}
+          data={data}
+          onChange={onChangeField}
+          disabled={disabled}
+          required={false}
+        />
       </>
     );
   }
@@ -63,7 +69,13 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
         <label className="block text-sm font-medium text-whiteText">
           {converterFieldToNameButton(params)}
         </label>
-        <DropDown name={params} data={data} onChange={onChangeField} disabled={disabled} />
+        <DropDown
+          name={params}
+          data={data}
+          onChange={onChangeField}
+          disabled={disabled}
+          required={false}
+        />
       </>
     );
   }
@@ -77,7 +89,13 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
         <label className="block text-sm font-medium text-whiteText">
           {converterFieldToNameButton(params)}
         </label>
-        <DropDown name={params} data={data} onChange={onChangeField} disabled={disabled} />
+        <DropDown
+          name={params}
+          data={data}
+          onChange={onChangeField}
+          disabled={disabled}
+          required={false}
+        />
       </>
     );
   }
@@ -92,7 +110,13 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
         <label className="block text-sm font-medium text-whiteText">
           {converterFieldToNameButton(params)}
         </label>
-        <DropDown name={params} data={data} onChange={onChangeField} disabled={disabled} />
+        <DropDown
+          name={params}
+          data={data}
+          onChange={onChangeField}
+          disabled={disabled}
+          required={false}
+        />
       </>
     );
   }
