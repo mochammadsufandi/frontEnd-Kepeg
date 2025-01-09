@@ -1,6 +1,6 @@
 "use client";
 
-import Forms from "../components/forms";
+import Forms from "../components/formsEdit";
 import { Navbar } from "../components/navbar";
 
 const Edit = () => {
@@ -36,14 +36,14 @@ const Edit = () => {
       required: true,
     },
     { field: "pangkatSejak", name: "Pangkat Sejak", type: "date", placeholder: "", required: true },
-    { field: "jabatanSejak", name: "Jabatan Sejak", type: "date", placeholder: "", required: true },
     {
-      field: "pendidikanTerakhir",
-      name: "Pendidikan Terakhir",
+      field: "namaJabatan",
+      name: "Nama Jabatan",
       type: "text",
-      placeholder: "OIIIIIIIIIIIIIIIIIIi",
-      required: false,
+      placeholder: "Kepala Kejaksaan Tinggi Jambi",
+      required: true,
     },
+    { field: "jabatanSejak", name: "Jabatan Sejak", type: "date", placeholder: "", required: true },
     { field: "PNSSejak", name: "PNS Sejak", type: "date", placeholder: "", required: true },
     { field: "jaksaSejak", name: "Jaksa Sejak", type: "date", placeholder: "", required: true },
     {
@@ -58,7 +58,7 @@ const Edit = () => {
   return (
     <div className="bg-foreground">
       <Navbar />
-      <div className="mt-[7rem] p-[2rem]">
+      <div className="mt-[5.5rem] p-[2rem]">
         <Forms data={fieldInput} />
       </div>
     </div>

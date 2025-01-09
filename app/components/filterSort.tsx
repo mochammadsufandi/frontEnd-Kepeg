@@ -4,6 +4,7 @@ import SortFieldDropDown from "./sortFieldDropDown";
 import { useEffect, useState } from "react";
 import { renderFilterField } from "@/utils/converter";
 import DropDown from "./dropdown";
+import { dynamicFilter } from "@/utils/fetchAPI/filterSort";
 
 const FilterSort = () => {
   const [filterFields, setFilterFields] = useState<FilterFields>({});
@@ -58,9 +59,10 @@ const FilterSort = () => {
     }
   }
 
-  function onFilterSortSubmit() {
+  async function onFilterSortSubmit() {
     console.log(filterFields);
     console.log(sortFields);
+    await dynamicFilter({ filterFields, sortFields });
   }
 
   // useEffect(() => {

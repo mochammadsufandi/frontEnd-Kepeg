@@ -69,3 +69,29 @@ export type DropDownFormInputProps = {
   disabled: boolean;
   required: boolean;
 };
+
+export type DataTableResult = {
+  nama: string;
+  NIP: string;
+  NRP: string;
+  gender: string;
+  tempatLahir: string;
+  tanggalLahir: string;
+  originalRank: string;
+  pangkatSejak: string;
+  jabatanSejak: string;
+  PNSSejak: string;
+  pendidikanTerakhir: string;
+  promotionYAD: string;
+  jaksa: string;
+  jaksaSejak: string;
+  keterangan: string;
+  promotionChecking: string;
+  marker: string;
+  keteranganTambahan: string;
+  namaJabatan: string;
+  unitKerja: {
+    id?: number;
+    nama: string;
+  };
+};

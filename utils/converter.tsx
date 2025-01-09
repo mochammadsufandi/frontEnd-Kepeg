@@ -149,6 +149,12 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
 
 export function converterFieldToNameButton(params: string): string {
   switch (params) {
+    case "NIP":
+      return "NIP";
+    case "NRP":
+      return "NRP";
+    case "NIP/NRP":
+      return "NIP/NRP";
     case "nama":
       return "Nama";
     case "gender":

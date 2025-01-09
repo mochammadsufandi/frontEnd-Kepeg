@@ -24,6 +24,15 @@ export default {
         nonActiveFilterField: "#F0E07C",
         whiteText: "#FFFFFF",
       },
+      keyframes: {
+        fadeOut: {
+          "0%": { opacity: "100", transform: "translateY(0)" },
+          "100%": { opacity: "20", transform: "translateY(2rem)" },
+        },
+      },
+      animation: {
+        fadeOut: "fadeOut 1s ease-in-out forwards",
+      },
     },
   },
   plugins: [],

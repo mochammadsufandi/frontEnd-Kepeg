@@ -9,7 +9,7 @@ import { converterFieldToNameButton } from "@/utils/converter";
 import { useState } from "react";
 import Modal from "./modal";
 
-const Forms = ({ data }: FormInputProps) => {
+const FormsInput = ({ data }: FormInputProps) => {
   const [isOpen, setIsOpen] = useState(false);
   function onCloseModal() {
     setIsOpen(false);
@@ -24,11 +24,15 @@ const Forms = ({ data }: FormInputProps) => {
   const dropDownField = [
     {
       data: [
-        { name: "Laki-laki", value: "L" },
-        { name: "Perempuan", value: "P" },
+        { name: "SMA", value: "SMA" },
+        { name: "DIII", value: "DIII" },
+        { name: "DIV", value: "DIV" },
+        { name: "Sarjana", value: "S." },
+        { name: "Magister", value: "M." },
+        { name: "Doktor", value: "Dr." },
       ],
       disabled: false,
-      name: "gender",
+      name: "pendidikanTerakhir",
       required: true,
     },
     {
@@ -135,11 +139,11 @@ const Forms = ({ data }: FormInputProps) => {
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={onOpenModal}
         >
-          Register new account
+          Add Personnel
         </button>
         <Modal
           isOpen={isOpen}
-          message="Are you sure to edit personnel"
+          message="Are you sure to input personnel"
           onClose={onCloseModal}
           onAction={onSubmit}
         />
@@ -148,4 +152,4 @@ const Forms = ({ data }: FormInputProps) => {
   );
 };
 
-export default Forms;
+export default FormsInput;
