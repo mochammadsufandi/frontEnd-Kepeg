@@ -193,3 +193,23 @@ export function converterFieldToNameButton(params: string): string {
       return "";
   }
 }
+
+export function converterToDate(params: string) {
+  const date = new Date(params).toLocaleDateString().split("/");
+  const monthString = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+  const [month, day, year] = date;
+  return `${day}-${monthString[parseInt(month)]}-${year}`;
+}

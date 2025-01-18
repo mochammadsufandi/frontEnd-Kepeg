@@ -15,10 +15,6 @@ type SearchByNIPNRP = {
   nrp: string;
 };
 
-type Error = {
-  message: string;
-};
-
 export const dynamicFilter = async ({ sortFields, filterFields }: Headers) => {
   const response = await fetch(`${baseURL}/dynamicFilter`, {
     headers: {
@@ -27,21 +23,19 @@ export const dynamicFilter = async ({ sortFields, filterFields }: Headers) => {
     },
   });
   const responseData = await response.json();
-  console.log(responseData);
+  const status = response.status;
+  return { responseData, status };
 };
 
 export const searchByName = async (nama: string) => {
-  try {
-    const response = await fetch(`${baseURL}/searchByName`, {
-      headers: {
-        nama,
-      },
-    });
-    const responseData = await response.json();
-    return responseData;
-  } catch (err) {
-    console.log(err);
-  }
+  const response = await fetch(`${baseURL}/searchByName`, {
+    headers: {
+      nama,
+    },
+  });
+  const responseData = await response.json();
+  const status = response.status;
+  return { responseData, status };
 };
 
 export const searchByNIPNRP = async ({ nip, nrp }: SearchByNIPNRP) => {
@@ -52,5 +46,6 @@ export const searchByNIPNRP = async ({ nip, nrp }: SearchByNIPNRP) => {
     },
   });
   const responseData = await response.json();
-  return responseData;
+  const status = response.status;
+  return { responseData, status };
 };

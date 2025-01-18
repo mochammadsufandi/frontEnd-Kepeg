@@ -1,16 +1,31 @@
 import { DropDownObject, FilterFields, SortFields } from "@/interface/propsInterface";
 import FilterFieldDropDown from "./filterFieldDropDown";
 import SortFieldDropDown from "./sortFieldDropDown";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { renderFilterField } from "@/utils/converter";
 import DropDown from "./dropdown";
 import { dynamicFilter } from "@/utils/fetchAPI/filterSort";
+import Toast from "./toast";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../lib/store";
+import {
+  filterSort,
+  fetchStatusMultiple,
+} from "../lib/features/personnel/multiplePersonnelSlicing";
+import { fetchData } from "../lib/features/responseTypeDataSlicing";
+import Link from "next/link";
 
 const FilterSort = () => {
   const [filterFields, setFilterFields] = useState<FilterFields>({});
   const [sortFields, setSortFields] = useState<SortFields>({});
   const [filterFieldLock, setFilterFieldLock] = useState(false);
   const [sortFieldLock, setSortFieldLock] = useState(false);
+  const [message, setMessage] = useState("");
+  const [reqStatus, setReqStatus] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+
+  // for redux
+  const dispatch: AppDispatch = useDispatch();
 
   const dropdownObj = [
     { name: "asc", value: "asc" },
@@ -58,18 +73,34 @@ const FilterSort = () => {
       setSortFieldLock((value) => value !== true);
     }
   }
-
-  async function onFilterSortSubmit() {
-    console.log(filterFields);
-    console.log(sortFields);
-    await dynamicFilter({ filterFields, sortFields });
+  function showToast() {
+    setIsVisible(true);
+    setTimeout(() => {
+      setIsVisible(false);
+    }, 3000);
   }
-
-  // useEffect(() => {
-  //   console.log(filterFields);
-  //   console.log(sortFields);
-  //   console.log(filterFieldLock);
-  // }, [filterFields, sortFields, filterFieldLock]);
+  function onCloseToast() {
+    setIsVisible(false);
+  }
+  async function onFilterSortSubmit() {
+    try {
+      const data = await dynamicFilter({ filterFields, sortFields });
+      const { responseData, status } = data;
+      if (status === 200) {
+        setReqStatus("success");
+      } else {
+        setReqStatus("error");
+      }
+      const statusForRedux = status === 200 ? "success" : "error";
+      dispatch(filterSort(responseData));
+      dispatch(fetchStatusMultiple(statusForRedux));
+      dispatch(fetchData("multiple"));
+      setMessage(responseData.message);
+      showToast();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="w-full bg-background px-[2rem] pb-[2rem]">
@@ -136,14 +167,21 @@ const FilterSort = () => {
           </button>
         </div>
       </div>
-      <div className="w-full h-fit flex justify-center items-center mt-1 py-[2rem] font-bold bg-filterAndSortBox">
+      <div className="w-full h-fit flex flex-col justify-center items-center mt-1 py-[2rem] font-bold bg-filterAndSortBox">
         <button
-          className="w-[50%] h-[3rem] bg-resultButton rounded-md"
+          className="w-[50%] h-[3rem] bg-resultButton rounded-md hover:bg-green-800"
           onClick={onFilterSortSubmit}
         >
           Filter & Sort Personnels
         </button>
+        <button
+          className="w-[50%] h-[3rem] mt-[1rem] text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg  px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          type="button"
+        >
+          <Link href={"/result-export"}>Lihat Hasil dan Export</Link>
+        </button>
       </div>
+      <Toast message={message} isVisible={isVisible} onClose={onCloseToast} type={reqStatus} />
     </div>
   );
 };

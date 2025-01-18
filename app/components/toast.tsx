@@ -9,7 +9,7 @@ const Toast = ({ message, isVisible, type, onClose }: ToastProps) => {
   if (!isVisible) return null;
   return (
     <div
-      className="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-900 border-white border-2 animate-fadeOut transition-all fixed top-[5rem] right-[40%] z-999"
+      className="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-900 border-white border-2 animate-fadeOut transition-all fixed top-[5rem] right-[40%] z-[200]"
       role="alert"
     >
       {type === "success" ? (

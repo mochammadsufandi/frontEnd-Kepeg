@@ -5,87 +5,28 @@ import { Navbar } from "../components/navbar";
 import TableResult from "../components/tableResult";
 import Toast from "../components/toast";
 import Pagination from "../components/pagination";
+import { useSelector } from "react-redux";
+import { RootState } from "../lib/store";
+import { converterFieldToNameButton } from "@/utils/converter";
 
 const ResultExport = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [page, setPage] = useState(1);
-  const array = [
-    {
-      nama: "Dr. HERMON DEKRISTO, S.H., M.H.",
-      NIP: "197010111996031002",
-      NRP: "69670056",
-      gender: "L",
-      tempatLahir: "Padang",
-      tanggalLahir: "11-10-1970",
-      originalRank: "Jaksa Utama Madya (IV/d)",
-      pangkatSejak: "01-10-2022",
-      jabatanSejak: "04-07-2024",
-      PNSSejak: "01-07-1997",
-      pendidikanTerakhir: "Dr.S.H.M.H",
-      promotionYAD: "01-04-2026",
-      jaksa: "true",
-      jaksaSejak: "01-07-1997",
-      keterangan: "Jaksa",
-      promotionChecking: "true",
-      marker: "false",
-      keteranganTambahan: "",
-      namaJabatan: "Kepala Kejaksaan Tinggi Jambi",
-      unitKerja: {
-        id: 1,
-        nama: "Kejaksaan Tinggi Jambi",
-      },
-    },
-    {
-      nama: "RIONO BUDISANTOSO, S.H., M.A.",
-      NIP: "196901091996031001",
-      NRP: "69669018",
-      gender: "L",
-      tempatLahir: "Jakarta",
-      tanggalLahir: "09-01-1969",
-      originalRank: "Jaksa Utama Muda / (IV/c)",
-      pangkatSejak: "01-04-2023",
-      jabatanSejak: "05-06-2024",
-      PNSSejak: "01-08-1997",
-      pendidikanTerakhir: "S.H.M.H.",
-      promotionYAD: "01-04-2027",
-      jaksa: "true",
-      jaksaSejak: "01-04-2001",
-      keterangan: "Jaksa",
-      promotionChecking: "true",
-      marker: "true",
-      keteranganTambahan: "",
-      namaJabatan: "Wakil Kepala Kejaksaan Tinggi Jambi",
-      unitKerja: {
-        id: 1,
-        nama: "Kejaksaan Tinggi Jambi",
-      },
-    },
-    {
-      nama: "Hermon Dekristo",
-      NIP: "",
-      NRP: "",
-      gender: "",
-      tempatLahir: "",
-      tanggalLahir: "",
-      originalRank: "",
-      pangkatSejak: "",
-      jabatanSejak: "",
-      PNSSejak: "",
-      pendidikanTerakhir: "",
-      promotionYAD: "",
-      jaksa: "",
-      jaksaSejak: "",
-      keterangan: "",
-      promotionChecking: "",
-      marker: "",
-      keteranganTambahan: "",
-      namaJabatan: "",
-      unitKerja: {
-        id: 1,
-        nama: "Kejaksaan Tinggi Jambi",
-      },
-    },
-  ];
+  const offset = 5;
+  const typeData = useSelector((state: RootState) => state.typeData);
+  const arrayMultiple = useSelector((state: RootState) => state.multiplePersonnel.data);
+  const singleData = useSelector((state: RootState) => state.singlePersonnel.data);
+  const totalPageMultiple =
+    useSelector((state: RootState) => state.multiplePersonnel.count) / offset;
+
+  const statusMultiple = useSelector((state: RootState) => state.multiplePersonnel.status);
+  const statusSingle = useSelector((state: RootState) => state.singlePersonnel.status);
+  const { filterField: filterFieldMultiple, sortField: sortFieldMultiple } = useSelector(
+    (state: RootState) => state.multiplePersonnel
+  );
+  const { filterField: filterFieldSingle, sortField: sortFieldSingle } = useSelector(
+    (state: RootState) => state.singlePersonnel
+  );
 
   function onCloseToast() {
     setIsVisible(false);
@@ -99,7 +40,6 @@ const ResultExport = () => {
 
   function handlePageChange(page: number) {
     setPage(page);
-    console.log(page);
   }
   return (
     <div>
@@ -114,9 +54,83 @@ const ResultExport = () => {
             Export Result to Word
           </button>
         </div>
-        <TableResult page={page} offset={2} data={array} />
+        <div className="flex mt-[1rem] py-[0.5rem] px-[2rem] justify-center">
+          <div className="w-[40%] flex flex-col mx-[0.5rem]">
+            <h2 className="w-full text-center text-lg font-bold">Filter By : </h2>
+
+            <div className="flex flex-wrap items-center justify-start font-semibold">
+              {Object.keys(filterFieldMultiple).length > 0 &&
+              typeData === "multiple" &&
+              statusMultiple === "success"
+                ? Object.keys(filterFieldMultiple).map((value, idx) => {
+                    return (
+                      <p key={idx} className="m-[0.5rem]">
+                        {`${converterFieldToNameButton(value)} : ${filterFieldMultiple[value]}`}
+                      </p>
+                    );
+                  })
+                : Object.keys(filterFieldSingle).length > 0 &&
+                  typeData === "single" &&
+                  statusSingle === "success"
+                ? Object.keys(filterFieldSingle).map((value, idx) => {
+                    return (
+                      <p key={idx} className="m-[0.5rem]">
+                        {`${converterFieldToNameButton(value)} : ${filterFieldSingle[value]}`}
+                      </p>
+                    );
+                  })
+                : ""}
+            </div>
+          </div>
+
+          <div className="w-[40%] flex flex-col mx-[0.5rem]">
+            <h2 className="w-full text-center text-lg font-bold">Sort By : </h2>
+            <div className="flex flex-wrap items-center justify-evenly font-semibold">
+              {Object.keys(sortFieldMultiple).length > 0 &&
+              typeData === "multiple" &&
+              statusMultiple === "success"
+                ? Object.keys(sortFieldMultiple).map((value, idx) => {
+                    return (
+                      <p key={idx} className="m-[0.5rem]">
+                        {`${converterFieldToNameButton(value)} : ${sortFieldMultiple[value]}`}
+                      </p>
+                    );
+                  })
+                : Object.keys(sortFieldSingle).length > 0 &&
+                  typeData === "single" &&
+                  statusSingle === "success"
+                ? Object.keys(sortFieldSingle).map((value, idx) => {
+                    return (
+                      <p key={idx} className="m-[0.5rem]">
+                        {`${converterFieldToNameButton(value)} : ${sortFieldSingle[value]}`}
+                      </p>
+                    );
+                  })
+                : ""}
+            </div>
+          </div>
+        </div>
+        {typeData === "multiple" && statusMultiple === "error" ? (
+          <TableResult page={page} offset={offset} data={[]} />
+        ) : typeData === "multiple" && statusMultiple === "success" ? (
+          <TableResult page={page} offset={offset} data={arrayMultiple} />
+        ) : typeData === "single" && statusSingle === "error" ? (
+          <TableResult page={page} offset={offset} data={[]} />
+        ) : typeData === "single" && statusSingle === "success" ? (
+          <TableResult page={page} offset={offset} data={[singleData]} />
+        ) : (
+          <TableResult page={page} offset={offset} data={[]} />
+        )}
         <div className="flex items-center justify-center pt-[1rem]">
-          <Pagination currentPage={page} totalPage={3} onPageChange={handlePageChange} />
+          {typeData === "multiple" ? (
+            <Pagination
+              currentPage={page}
+              totalPage={totalPageMultiple}
+              onPageChange={handlePageChange}
+            />
+          ) : (
+            <Pagination currentPage={page} totalPage={1} onPageChange={handlePageChange} />
+          )}
         </div>
       </div>
       <Toast

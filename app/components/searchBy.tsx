@@ -4,20 +4,32 @@ import DropDown from "./dropdown";
 import { DropDownObject } from "@/interface/propsInterface";
 import { searchByName, searchByNIPNRP } from "@/utils/fetchAPI/filterSort";
 import Toast from "./toast";
+import { AppDispatch } from "../lib/store";
+import {
+  filterSort,
+  fetchStatusMultiple,
+} from "../lib/features/personnel/multiplePersonnelSlicing";
+import { searchBy, fetchStatusSingle } from "../lib/features/personnel/singlePersonnelSlicing";
+import { fetchData } from "../lib/features/responseTypeDataSlicing";
+import { useDispatch } from "react-redux";
+import Link from "next/link";
 
-type SearchByProps = {
-  onSearchName: () => void;
-  onSearchNIPNRP: () => void;
-};
+// type SearchByProps = {
+//   onSearchName: () => void;
+//   onSearchNIPNRP: () => void;
+// };
 
 const SearchBy = () => {
   const [nip, setnip] = useState("");
   const [nrp, setnrp] = useState("");
   const [nama, setNama] = useState("");
   const [selectField, setSelectField] = useState("");
-  const [isVisibleName, setIsVisibleName] = useState(false);
+  const [isVisible, setisVisible] = useState(false);
   const [messageToast, setMessageToast] = useState("");
   const [reqStatus, setReqStatus] = useState("");
+
+  // for redux
+  const dispatch: AppDispatch = useDispatch();
 
   const searchField = [
     { name: "NRP", value: "NRP" },
@@ -26,29 +38,41 @@ const SearchBy = () => {
   async function handleSearchByName(nama: string) {
     try {
       const data = await searchByName(nama);
-      setNama(nama);
-      setReqStatus("success");
-      setMessageToast(data.message);
+      const { responseData, status } = data;
+      setNama("");
+      if (status === 200) {
+        setReqStatus("success");
+      } else {
+        setReqStatus("error");
+      }
+      const statusForRedux = status === 200 ? "success" : "error";
+      dispatch(filterSort(responseData));
+      dispatch(fetchStatusMultiple(statusForRedux));
+      dispatch(fetchData("multiple"));
+      setMessageToast(responseData.message);
       showToastName();
     } catch (err) {
-      setReqStatus("error");
-      showToastName();
-      setMessageToast(err.message);
       console.log(err);
     }
   }
   async function handleSearchByNRPNIP() {
     try {
       const data = await searchByNIPNRP({ nip, nrp });
+      const { responseData, status } = data;
       setnip("");
       setnrp("");
-      setReqStatus("success");
-      setMessageToast(data.message);
+      if (status === 200) {
+        setReqStatus("success");
+      } else {
+        setReqStatus("error");
+      }
+      const statusForRedux = status === 200 ? "success" : "error";
+      dispatch(searchBy(responseData));
+      dispatch(fetchStatusSingle(statusForRedux));
+      dispatch(fetchData("single"));
+      setMessageToast(responseData.message);
       showToastName();
     } catch (err) {
-      setReqStatus("error");
-      // setMessageToast()
-      showToastName();
       console.log(err);
     }
   }
@@ -66,56 +90,61 @@ const SearchBy = () => {
     setNama(params);
   }
   function showToastName() {
-    setIsVisibleName(true);
+    setisVisible(true);
     setTimeout(() => {
-      setIsVisibleName(false);
+      setisVisible(false);
     }, 3000);
   }
   function onCloseToastName() {
-    setIsVisibleName(false);
+    setisVisible(false);
   }
+
   return (
     <>
       <div className="w-[100%] h-fit bg-searchByBox flex flex-wrap justify-evenly pb-[2rem]">
         <h1 className="w-[100%] pt-[1rem] pb-[2rem] text-center text-background font-semibold text-[18px]">
           Please Input NIP/NRP or Name
         </h1>
-        <form
-          className="flex flex-col flex-wrap w-[35%] bg-searchByDivPart p-[2rem] rounded-lg"
-          onSubmit={(ev) => {
-            ev.preventDefault();
-            handleSearchByNRPNIP();
-          }}
-        >
-          <DropDown
-            data={searchField}
-            name="NIP/NRP"
-            disabled={false}
-            onChange={onSelectDropdown}
-            required={true}
-          />
-          <div className="w-[100%] pb-[1rem] flex items-center mt-[1rem]">
-            <input
-              type="text"
-              placeholder="Search By NIP/NRP"
-              className="h-[2rem] w-[75%] rounded-md text-center p-[10px] mr-[1rem]"
+        <div className=" w-[35%] bg-searchByDivPart p-[2rem] rounded-lg">
+          <form
+            className="flex flex-col flex-wrap"
+            onSubmit={(ev) => {
+              ev.preventDefault();
+              handleSearchByNRPNIP();
+            }}
+          >
+            <DropDown
+              data={searchField}
+              name="NIP/NRP"
+              disabled={false}
+              onChange={onSelectDropdown}
               required={true}
-              value={nip.length !== 0 ? nip : nrp}
-              onChange={(ev) => {
-                onChangeNRPNIP(ev.target.value);
-              }}
-              disabled={selectField === "" ? true : false}
-            ></input>
-            <button
-              className="bg-searchButton w-[20%] h-[2rem] rounded-md flex items-center justify-center"
-              type="submit"
-            >
-              <Image alt="searchButton" src={"/images/search.png"} height={30} width={30}></Image>
-            </button>
-          </div>
+            />
+            <div className="w-[100%] pb-[1rem] flex items-center mt-[1rem]">
+              <input
+                type="text"
+                placeholder="Search By NIP/NRP"
+                className="h-[2rem] w-[75%] rounded-md text-center p-[10px] mr-[1rem]"
+                required={true}
+                value={nip.length !== 0 ? nip : nrp}
+                onChange={(ev) => {
+                  onChangeNRPNIP(ev.target.value);
+                }}
+                disabled={selectField === "" ? true : false}
+              ></input>
+              <button
+                className="bg-searchButton w-[20%] h-[2rem] rounded-md flex items-center justify-center hover:bg-blue-800"
+                type="submit"
+              >
+                <Image alt="searchButton" src={"/images/search.png"} height={30} width={30}></Image>
+              </button>
+            </div>
+          </form>
           <div className="">
-            <button className="w-[100%] h-[2rem] rounded-md bg-resultButton flex items-center justify-center gap-3">
-              <span>See Result & Export</span>
+            <button className="w-[100%] h-[2rem] rounded-md bg-resultButton flex items-center justify-center gap-3 hover:bg-green-800">
+              <Link href={"/result-export"}>
+                <span>See Result & Export</span>
+              </Link>
               <Image
                 src={"/images/download.png"}
                 alt="downloadButton"
@@ -124,36 +153,39 @@ const SearchBy = () => {
               ></Image>
             </button>
           </div>
-        </form>
-        <form
-          className="flex flex-col flex-wrap justify-evenly w-[35%] bg-searchByDivPart p-[2rem] rounded-lg"
-          onSubmit={(ev) => {
-            ev.preventDefault();
-            handleSearchByName(nama);
-          }}
-        >
-          <div className="w-[100%] pb-[1rem] flex items-center">
-            <input
-              type="text"
-              placeholder="Search By Name"
-              className="h-[2rem] w-[75%] rounded-md text-center p-[10px] mr-[1rem]"
-              required={true}
-              value={nama}
-              onChange={(ev) => onChangeNama(ev.target.value)}
-            ></input>
-            <button
-              className="bg-searchButton w-[20%] h-[2rem] rounded-md flex items-center justify-center"
-              type="submit"
-            >
-              <Image alt="searchButton" src={"/images/search.png"} height={30} width={30}></Image>
-            </button>
-          </div>
+        </div>
+        <div className="w-[35%] bg-searchByDivPart p-[2rem] rounded-lg flex flex-col flex-wrap justify-evenly ">
+          <form
+            onSubmit={(ev) => {
+              ev.preventDefault();
+              handleSearchByName(nama);
+            }}
+          >
+            <div className="w-[100%] pb-[1rem] flex items-center">
+              <input
+                type="text"
+                placeholder="Search By Name"
+                className="h-[2rem] w-[75%] rounded-md text-center p-[10px] mr-[1rem]"
+                required={true}
+                value={nama}
+                onChange={(ev) => onChangeNama(ev.target.value)}
+              ></input>
+              <button
+                className="bg-searchButton w-[20%] h-[2rem] rounded-md flex items-center justify-center hover:bg-blue-800"
+                type="submit"
+              >
+                <Image alt="searchButton" src={"/images/search.png"} height={30} width={30}></Image>
+              </button>
+            </div>
+          </form>
           <div className="">
             <button
-              className="w-[100%] h-[2rem] rounded-md bg-resultButton flex items-center justify-center gap-3"
+              className="w-[100%] h-[2rem] rounded-md bg-resultButton flex items-center justify-center gap-3 hover:bg-green-800"
               type="button"
             >
-              <span>See Result & Export</span>
+              <Link href={"/result-export"}>
+                <span>See Result & Export</span>
+              </Link>
               <Image
                 src={"/images/download.png"}
                 alt="downloadButton"
@@ -162,11 +194,11 @@ const SearchBy = () => {
               ></Image>
             </button>
           </div>
-        </form>
+        </div>
       </div>
       <Toast
         message={messageToast}
-        isVisible={isVisibleName}
+        isVisible={isVisible}
         type={reqStatus}
         onClose={onCloseToastName}
       />

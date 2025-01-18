@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal from "./modal";
 import { DataTableResult } from "@/interface/propsInterface";
+import { converterToDate } from "@/utils/converter";
 
 type TableResultProps = {
   page: number;
@@ -100,27 +101,27 @@ const TableResult = ({ page, offset, data }: TableResultProps) => {
                   </th>
                   <td scope="row" className="px-6 py-4 ">
                     <div className="font-semibold text-background">{value.nama}</div>
-                    <div>{`${value.tempatLahir}, ${value.tanggalLahir}`}</div>
+                    <div>{`${value.tempatLahir}, ${converterToDate(value.tanggalLahir)}`}</div>
                     <div>{`NRP. ${value.NRP}`}</div>
                     <div>{`NIP. ${value.NIP}`}</div>
                   </td>
                   <td className="px-6 py-4">
                     <div>{value.originalRank}</div>
-                    <div>{value.pangkatSejak}</div>
+                    <div>{converterToDate(value.pangkatSejak)}</div>
                   </td>
                   <td className="px-6 py-4">
                     <div>{value.namaJabatan}</div>
-                    <div>{value.jabatanSejak}</div>
+                    <div>{converterToDate(value.jabatanSejak)}</div>
                   </td>
-                  <td className="px-6 py-4">{value.PNSSejak}</td>
+                  <td className="px-6 py-4">{converterToDate(value.PNSSejak)}</td>
                   <td className="px-6 py-4 text-right">
                     <div>{value.pendidikanTerakhir}</div>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <div>{value.promotionYAD}</div>
+                    <div>{converterToDate(value.promotionYAD)}</div>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <div>{value.jaksaSejak}</div>
+                    <div>{converterToDate(value.jaksaSejak)}</div>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div>{value.keterangan}</div>
