@@ -79,7 +79,7 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
       </>
     );
   }
-  if (params === "marker" || params === "jaksa" || params === "promotionChecking") {
+  if (params === "marker" || params === "promotionChecking" || params === "jaksa") {
     const data = [
       { name: "true", value: "true" },
       { name: "false", value: "false" },
@@ -96,6 +96,41 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
           disabled={disabled}
           required={false}
         />
+      </>
+    );
+  }
+  if (params === "originalRank") {
+    const data = [
+      { name: "IV/e", value: "IV/e" },
+      { name: "IV/d", value: "IV/d" },
+      { name: "IV/c", value: "IV/c" },
+      { name: "IV/b", value: "IV/b" },
+      { name: "IV/a", value: "IV/a" },
+      { name: "III/d", value: "III/d" },
+      { name: "III/c", value: "III/c" },
+      { name: "III/b", value: "III/b" },
+      { name: "III/a", value: "III/a" },
+      { name: "II/d", value: "II/d" },
+      { name: "II/c", value: "II/c" },
+      { name: "II/b", value: "II/b" },
+      { name: "II/a", value: "II/a" },
+      { name: "I/d", value: "I/d" },
+      { name: "I/c", value: "I/c" },
+      { name: "I/b", value: "I/b" },
+      { name: "I/a", value: "I/a" },
+    ];
+    return (
+      <>
+        <label className="block text-sm font-medium text-whiteText">
+          {converterFieldToNameButton(params)}
+        </label>
+        <DropDown
+          name={params}
+          data={data}
+          onChange={onChangeField}
+          disabled={disabled}
+          required={false}
+        ></DropDown>
       </>
     );
   }
@@ -121,12 +156,7 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
     );
   }
 
-  if (
-    params === "tempatLahir" ||
-    params === "originalRank" ||
-    params === "keterangan" ||
-    params === "keteranganTambahan"
-  ) {
+  if (params === "tempatLahir" || params === "keterangan" || params === "keteranganTambahan") {
     return (
       <>
         <label className="block text-sm font-medium text-whiteText">
@@ -163,6 +193,8 @@ export function converterFieldToNameButton(params: string): string {
       return "Tempat Lahir";
     case "tanggalLahir":
       return "Tanggal Lahir";
+    case "numericRank":
+      return "Pangkat";
     case "originalRank":
       return "Pangkat";
     case "pangkatSejak":
@@ -211,5 +243,5 @@ export function converterToDate(params: string) {
     "Desember",
   ];
   const [month, day, year] = date;
-  return `${day}-${monthString[parseInt(month)]}-${year}`;
+  return `${day}-${monthString[parseInt(month) - 1]}-${year}`;
 }

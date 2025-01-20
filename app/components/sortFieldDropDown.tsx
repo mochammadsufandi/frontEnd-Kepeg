@@ -11,6 +11,8 @@ export default function SortFieldDropDown({
   const filters = [
     "nama",
     "tanggalLahir",
+    "tempatLahir",
+    "numericRank",
     "pangkatSejak",
     "jabatanSejak",
     "PNSSejak",
