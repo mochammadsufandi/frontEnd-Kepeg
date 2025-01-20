@@ -83,11 +83,11 @@ export type DataTableResult = {
   PNSSejak: string;
   pendidikanTerakhir: string;
   promotionYAD: string;
-  jaksa: string;
+  jaksa: boolean;
   jaksaSejak: string;
   keterangan: string;
-  promotionChecking: string;
-  marker: string;
+  promotionChecking: boolean;
+  marker: boolean;
   keteranganTambahan: string;
   namaJabatan: string;
   unitKerja: {

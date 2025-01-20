@@ -35,6 +35,7 @@ const multiplePersonnelSlicing = createSlice({
           cacheId: actions.payload.cacheId,
           filterField: actions.payload.filterField,
           sortField: actions.payload.sortField,
+          count: actions.payload.count,
         };
       } else {
         return {
@@ -49,8 +50,18 @@ const multiplePersonnelSlicing = createSlice({
         status: actions.payload,
       };
     },
+    markPersonnelMultiple(state, actions: PayloadAction<string>) {
+      const NIP = actions.payload;
+      return {
+        ...state,
+        data: state.data.map((value) =>
+          value.NIP === NIP ? { ...value, marker: !value.marker } : value
+        ),
+      };
+    },
   },
 });
 
-export const { filterSort, fetchStatusMultiple } = multiplePersonnelSlicing.actions;
+export const { filterSort, fetchStatusMultiple, markPersonnelMultiple } =
+  multiplePersonnelSlicing.actions;
 export default multiplePersonnelSlicing.reducer;

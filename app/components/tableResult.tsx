@@ -7,23 +7,28 @@ type TableResultProps = {
   page: number;
   offset: number;
   data: DataTableResult[];
+  onSwitchNIP: (NIP: string) => void;
+  onMarkPersonnel?: () => void;
 };
 
-const TableResult = ({ page, offset, data }: TableResultProps) => {
+const TableResult = ({ page, offset, data, onSwitchNIP, onMarkPersonnel }: TableResultProps) => {
   const [isOpenMarker, setIsOpenMarker] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
 
-  function onOpenMarker() {
+  function onOpenMarker(params: string) {
     setIsOpenMarker(true);
+    onSwitchNIP(params);
   }
 
-  function onOpenEdit() {
+  function onOpenEdit(params: string) {
     setIsOpenEdit(true);
+    onSwitchNIP(params);
   }
 
-  function onOpenDelete() {
+  function onOpenDelete(params: string) {
     setIsOpenDelete(true);
+    onSwitchNIP(params);
   }
 
   function onCloseModal() {
@@ -31,10 +36,8 @@ const TableResult = ({ page, offset, data }: TableResultProps) => {
     setIsOpenEdit(false);
     setIsOpenDelete(false);
   }
-
-  function onMarkPersonnel() {}
-  function onEditPersonnel() {}
-  function onDeletePersonnel() {}
+  async function onEditPersonnel() {}
+  async function onDeletePersonnel() {}
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-md mx-[2rem]">
@@ -91,7 +94,11 @@ const TableResult = ({ page, offset, data }: TableResultProps) => {
               return (
                 <tr
                   key={idx}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  className={` ${
+                    value.marker === false
+                      ? "bg-white  dark:bg-gray-800"
+                      : "bg-logoBox dark:bg-logoBox"
+                  } border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600`}
                 >
                   <th
                     scope="row"
@@ -130,27 +137,27 @@ const TableResult = ({ page, offset, data }: TableResultProps) => {
                     <button
                       type="button"
                       className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      onClick={onOpenMarker}
+                      onClick={() => onOpenMarker(value.NIP)}
                     >
-                      Lime
+                      Mark
                     </button>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button
                       type="button"
                       className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      onClick={onOpenEdit}
+                      onClick={() => onOpenEdit(value.NIP)}
                     >
-                      Green
+                      Edit
                     </button>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button
                       type="button"
                       className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      onClick={onOpenDelete}
+                      onClick={() => onOpenDelete(value.NIP)}
                     >
-                      Red
+                      Delete
                     </button>
                   </td>
                   <td className="px-6 py-4 text-right">
@@ -158,7 +165,7 @@ const TableResult = ({ page, offset, data }: TableResultProps) => {
                       type="button"
                       className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                     >
-                      Teal
+                      Check
                     </button>
                   </td>
                   <td></td>
@@ -172,7 +179,11 @@ const TableResult = ({ page, offset, data }: TableResultProps) => {
         message="Are you sure to mark this personnel ?"
         isOpen={isOpenMarker}
         onClose={onCloseModal}
-        onAction={onMarkPersonnel}
+        onAction={() => {
+          if (onMarkPersonnel) {
+            onMarkPersonnel();
+          }
+        }}
       />
       <Modal
         message="Are you sure to edit this personnel ?"

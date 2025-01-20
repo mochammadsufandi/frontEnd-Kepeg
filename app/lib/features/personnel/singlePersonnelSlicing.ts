@@ -49,8 +49,17 @@ const singlePersonnelSlice = createSlice({
         status: actions.payload,
       };
     },
+    markPersonnelSingle(state) {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          marker: !state.data.marker,
+        },
+      };
+    },
   },
 });
 
-export const { searchBy, fetchStatusSingle } = singlePersonnelSlice.actions;
+export const { searchBy, fetchStatusSingle, markPersonnelSingle } = singlePersonnelSlice.actions;
 export default singlePersonnelSlice.reducer;
