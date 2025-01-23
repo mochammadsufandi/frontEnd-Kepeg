@@ -8,10 +8,20 @@ type TableResultProps = {
   offset: number;
   data: DataTableResult[];
   onSwitchNIP: (NIP: string) => void;
+  onSwitchNIPEdit: (NIP: string) => void;
   onMarkPersonnel?: () => void;
+  onEditPersonnel?: () => void;
 };
 
-const TableResult = ({ page, offset, data, onSwitchNIP, onMarkPersonnel }: TableResultProps) => {
+const TableResult = ({
+  page,
+  offset,
+  data,
+  onSwitchNIP,
+  onSwitchNIPEdit,
+  onMarkPersonnel,
+  onEditPersonnel,
+}: TableResultProps) => {
   const [isOpenMarker, setIsOpenMarker] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
@@ -23,7 +33,7 @@ const TableResult = ({ page, offset, data, onSwitchNIP, onMarkPersonnel }: Table
 
   function onOpenEdit(params: string) {
     setIsOpenEdit(true);
-    onSwitchNIP(params);
+    onSwitchNIPEdit(params);
   }
 
   function onOpenDelete(params: string) {
@@ -36,7 +46,6 @@ const TableResult = ({ page, offset, data, onSwitchNIP, onMarkPersonnel }: Table
     setIsOpenEdit(false);
     setIsOpenDelete(false);
   }
-  async function onEditPersonnel() {}
   async function onDeletePersonnel() {}
 
   return (

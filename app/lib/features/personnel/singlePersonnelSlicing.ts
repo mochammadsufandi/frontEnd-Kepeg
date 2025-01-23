@@ -12,6 +12,7 @@ export interface SinglePersonnelResponse {
   };
   count: number;
   status: string;
+  editField: DataTableResult;
 }
 
 const initialState: SinglePersonnelResponse = {
@@ -21,6 +22,7 @@ const initialState: SinglePersonnelResponse = {
   sortField: {},
   count: 0,
   status: "",
+  editField: {} as DataTableResult,
 };
 
 const singlePersonnelSlice = createSlice({
@@ -58,8 +60,34 @@ const singlePersonnelSlice = createSlice({
         },
       };
     },
+    editPersonnelSingle(state, actions: PayloadAction<string>) {
+      const NIP = actions.payload;
+      if (state.data.NIP === NIP) {
+        return {
+          ...state,
+          editField: state.data,
+        };
+      } else {
+        return {
+          ...state,
+          editField: {} as DataTableResult,
+        };
+      }
+    },
+    changePersonnelAfterEditSingle(state, actions: PayloadAction<DataTableResult>) {
+      return {
+        ...state,
+        data: actions.payload,
+      };
+    },
   },
 });
 
-export const { searchBy, fetchStatusSingle, markPersonnelSingle } = singlePersonnelSlice.actions;
+export const {
+  searchBy,
+  fetchStatusSingle,
+  markPersonnelSingle,
+  editPersonnelSingle,
+  changePersonnelAfterEditSingle,
+} = singlePersonnelSlice.actions;
 export default singlePersonnelSlice.reducer;
