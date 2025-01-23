@@ -10,13 +10,20 @@ import { RootState } from "../lib/store";
 import { converterFieldToNameButton } from "@/utils/converter";
 import { AppDispatch } from "../lib/store";
 import { useDispatch } from "react-redux";
-import { switchNIP } from "../lib/features/uniqueIDSlicing";
-import { markPersonnelMultiple } from "../lib/features/personnel/multiplePersonnelSlicing";
-import { markPersonnelSingle } from "../lib/features/personnel/singlePersonnelSlicing";
+import { switchNIP, switchNIPEdit } from "../lib/features/uniqueIDSlicing";
+import {
+  editPersonnelMultiple,
+  markPersonnelMultiple,
+} from "../lib/features/personnel/multiplePersonnelSlicing";
+import {
+  editPersonnelSingle,
+  markPersonnelSingle,
+} from "../lib/features/personnel/singlePersonnelSlicing";
 import { markPersonnel } from "@/utils/fetchAPI/markPersonnel";
 import Modal from "../components/modal";
 import { exportToWord } from "@/utils/fetchAPI/exportFile";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const ResultExport = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -42,8 +49,12 @@ const ResultExport = () => {
   const [statusToast, setStatusToast] = useState("");
   const [messageToast, setMessageToast] = useState("");
   const NIP = useSelector((state: RootState) => state.NIP);
+  const NIPEdit = useSelector((state: RootState) => state.NIPEdit);
   const cacheIdSingle = useSelector((state: RootState) => state.singlePersonnel.cacheId);
   const cacheIdMultiple = useSelector((state: RootState) => state.multiplePersonnel.cacheId);
+
+  // router
+  const router = useRouter();
 
   // for redux
   const dispatch: AppDispatch = useDispatch();
@@ -66,6 +77,10 @@ const ResultExport = () => {
 
   function onSwitchNIP(NIP: string) {
     dispatch(switchNIP(NIP));
+  }
+
+  function onSwitchNIPEdit(NIP: string) {
+    dispatch(switchNIPEdit(NIP));
   }
 
   function handlePageChange(page: number) {
@@ -103,14 +118,21 @@ const ResultExport = () => {
       const fileURL = URL.createObjectURL(fileBlob);
       setDownloadURL(fileURL);
       setIsDownloadVisible(true);
-      console.log(fileURL);
     } else if (cacheIdMultiple) {
       const fileBlob = await exportToWord(cacheIdMultiple);
       const fileURL = URL.createObjectURL(fileBlob);
       setDownloadURL(fileURL);
       setIsDownloadVisible(true);
-      console.log(fileURL);
     }
+  }
+
+  async function onEditPersonnel() {
+    if (typeData === "multiple") {
+      dispatch(editPersonnelMultiple(NIPEdit));
+    } else {
+      dispatch(editPersonnelSingle(NIPEdit));
+    }
+    router.push("/edit");
   }
 
   return (
@@ -198,27 +220,49 @@ const ResultExport = () => {
           </div>
         </div>
         {typeData === "multiple" && statusMultiple === "error" ? (
-          <TableResult page={page} offset={offset} data={[]} onSwitchNIP={onSwitchNIP} />
+          <TableResult
+            page={page}
+            offset={offset}
+            data={[]}
+            onSwitchNIP={onSwitchNIP}
+            onSwitchNIPEdit={onSwitchNIPEdit}
+          />
         ) : typeData === "multiple" && statusMultiple === "success" ? (
           <TableResult
             page={page}
             offset={offset}
             data={arrayMultiple}
             onSwitchNIP={onSwitchNIP}
+            onSwitchNIPEdit={onSwitchNIPEdit}
             onMarkPersonnel={onMarkPersonnel}
+            onEditPersonnel={onEditPersonnel}
           />
         ) : typeData === "single" && statusSingle === "error" ? (
-          <TableResult page={page} offset={offset} data={[]} onSwitchNIP={onSwitchNIP} />
+          <TableResult
+            page={page}
+            offset={offset}
+            data={[]}
+            onSwitchNIP={onSwitchNIP}
+            onSwitchNIPEdit={onSwitchNIPEdit}
+          />
         ) : typeData === "single" && statusSingle === "success" ? (
           <TableResult
             page={page}
             offset={offset}
             data={[singleData]}
             onSwitchNIP={onSwitchNIP}
+            onSwitchNIPEdit={onSwitchNIPEdit}
             onMarkPersonnel={onMarkPersonnel}
+            onEditPersonnel={onEditPersonnel}
           />
         ) : (
-          <TableResult page={page} offset={offset} data={[]} onSwitchNIP={onSwitchNIP} />
+          <TableResult
+            page={page}
+            offset={offset}
+            data={[]}
+            onSwitchNIP={onSwitchNIP}
+            onSwitchNIPEdit={onSwitchNIPEdit}
+          />
         )}
         <div className="flex items-center justify-center pt-[1rem]">
           {typeData === "multiple" ? (

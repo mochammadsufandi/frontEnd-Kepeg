@@ -1,5 +1,5 @@
 import DropDown from "@/app/components/dropdown";
-import { DropDownObject } from "@/interface/propsInterface";
+import { DataEditParams, DataTableResult, DropDownObject } from "@/interface/propsInterface";
 
 type RenderFieldParams = {
   params: string;
@@ -244,4 +244,13 @@ export function converterToDate(params: string) {
   ];
   const [month, day, year] = date;
   return `${day}-${monthString[parseInt(month) - 1]}-${year}`;
+}
+
+export function mappingToDataEditParams(params : DataTableResult) : DataEditParams {
+  const {unitKerja, jabatanId, jabatan, gender, ...rest} = params
+  console.log(unitKerja,jabatan,jabatanId,gender)
+  return {
+    ...rest,
+    unitId : rest.unitId ?? null
+  }
 }

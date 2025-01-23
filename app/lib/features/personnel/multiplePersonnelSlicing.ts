@@ -12,6 +12,7 @@ export interface MultiplePersonnelResponse {
   };
   count: number;
   status: string;
+  editField: DataTableResult;
 }
 
 const initialState: MultiplePersonnelResponse = {
@@ -21,6 +22,7 @@ const initialState: MultiplePersonnelResponse = {
   sortField: {},
   count: 0,
   status: "",
+  editField: {} as DataTableResult,
 };
 
 const multiplePersonnelSlicing = createSlice({
@@ -59,9 +61,39 @@ const multiplePersonnelSlicing = createSlice({
         ),
       };
     },
+    editPersonnelMultiple(state, actions: PayloadAction<string>) {
+      const NIP = actions.payload;
+      const personnel = state.data.find((value) => value.NIP === NIP);
+      if (personnel) {
+        return {
+          ...state,
+          editField: personnel,
+        };
+      } else {
+        return {
+          ...state,
+          editField: {} as DataTableResult,
+        };
+      }
+    },
+    changePersonnelAfterEditMultiple(state, actions: PayloadAction<DataTableResult>) {
+      const NIP = actions.payload.NIP;
+      const personnel = actions.payload;
+      return {
+        ...state,
+        data: state.data.map((value) =>
+          value.NIP === NIP ? { ...value, ...personnel } : { ...value }
+        ),
+      };
+    },
   },
 });
 
-export const { filterSort, fetchStatusMultiple, markPersonnelMultiple } =
-  multiplePersonnelSlicing.actions;
+export const {
+  filterSort,
+  fetchStatusMultiple,
+  markPersonnelMultiple,
+  editPersonnelMultiple,
+  changePersonnelAfterEditMultiple,
+} = multiplePersonnelSlicing.actions;
 export default multiplePersonnelSlicing.reducer;

@@ -48,6 +48,7 @@ export interface DropDownProps {
   disabled: boolean;
   required: boolean;
   name: string;
+  defaultValue?: DropDownObject;
   onChange: ({ name, value }: DropDownObject) => void;
 }
 
@@ -55,19 +56,35 @@ export type CustomInputProps = {
   field: string;
   type: string;
   name: string;
+  value: string;
   required: boolean;
   placeholder: string;
+  onChange: ({ name, value }: { name: string; value: string }) => void;
+};
+
+export type CustomInputFormProps = {
+  field: string;
+  type: string;
+  name: string;
+  value: string;
+  required: boolean;
+  placeholder: string;
+  onChange?: ({ name, value }: { name: string; value: string }) => void;
 };
 
 export type FormInputProps = {
-  data: CustomInputProps[];
+  dataInput: CustomInputFormProps[];
+  dataDropDown: DropDownFormInputProps[];
+  onSubmit?: (ev: React.FormEvent) => void;
 };
 
 export type DropDownFormInputProps = {
   name: string;
   data: DropDownObject[];
+  defaultValue?: DropDownObject;
   disabled: boolean;
   required: boolean;
+  onChange?: ({ name, value }: DropDownObject) => void;
 };
 
 export type DataTableResult = {
@@ -90,8 +107,17 @@ export type DataTableResult = {
   marker: boolean;
   keteranganTambahan: string;
   namaJabatan: string;
+  unitId: number | null;
+  jabatanId: number | null;
+  jabatan: {
+    id?: number;
+    nama: string;
+  } | null;
   unitKerja: {
     id?: number;
     nama: string;
   };
 };
+
+export interface DataEditParams
+  extends Omit<DataTableResult, "unitKerja" | "gender" | "jabatan" | "jabatanId"> {}

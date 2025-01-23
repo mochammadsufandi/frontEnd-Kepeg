@@ -1,6 +1,14 @@
 import { CustomInputProps } from "@/interface/propsInterface";
 
-const CustomInput = ({ field, type, name, required, placeholder }: CustomInputProps) => {
+const CustomInput = ({
+  field,
+  type,
+  name,
+  required,
+  placeholder,
+  value,
+  onChange,
+}: CustomInputProps) => {
   return (
     <div className="mb-5">
       <label
@@ -15,23 +23,24 @@ const CustomInput = ({ field, type, name, required, placeholder }: CustomInputPr
         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
         placeholder={placeholder}
         required={required}
+        value={value}
         minLength={field === "NIP" ? 18 : field === "NRP" ? 8 : 1}
         min={0}
-        onInput={(e) => {
-          const input = e.target as HTMLInputElement;
+        onChange={(ev) => {
+          const inputValue = ev.target.value;
           if (type === "number") {
-            const value = input.value;
-            const length = value.length;
+            const length = inputValue.length;
             if ((field === "NIP" && length !== 18) || (field === "NRP" && length !== 8)) {
-              input.setCustomValidity(
+              ev.target.setCustomValidity(
                 `The ${field} field must have  ${
                   field === "NIP" ? 18 : 8
                 } characters (you are currently using ${length})`
               );
             } else {
-              input.setCustomValidity("");
+              ev.target.setCustomValidity("");
             }
           }
+          onChange({ name: field, value: inputValue });
         }}
       />
     </div>
