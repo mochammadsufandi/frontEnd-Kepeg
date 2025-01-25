@@ -11,6 +11,7 @@ type TableResultProps = {
   onSwitchNIPEdit: (NIP: string) => void;
   onMarkPersonnel?: () => void;
   onEditPersonnel?: () => void;
+  onDeletePersonnel?: () => void;
 };
 
 const TableResult = ({
@@ -21,6 +22,7 @@ const TableResult = ({
   onSwitchNIPEdit,
   onMarkPersonnel,
   onEditPersonnel,
+  onDeletePersonnel,
 }: TableResultProps) => {
   const [isOpenMarker, setIsOpenMarker] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -46,7 +48,6 @@ const TableResult = ({
     setIsOpenEdit(false);
     setIsOpenDelete(false);
   }
-  async function onDeletePersonnel() {}
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-md mx-[2rem]">
