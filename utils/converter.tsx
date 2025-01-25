@@ -227,30 +227,34 @@ export function converterFieldToNameButton(params: string): string {
 }
 
 export function converterToDate(params: string) {
-  const date = new Date(params).toLocaleDateString().split("/");
-  const monthString = [
-    "Januari",
-    "Februari",
-    "Maret",
-    "April",
-    "Mei",
-    "Juni",
-    "Juli",
-    "Agustus",
-    "September",
-    "Oktober",
-    "November",
-    "Desember",
-  ];
-  const [month, day, year] = date;
-  return `${day}-${monthString[parseInt(month) - 1]}-${year}`;
+  if (params) {
+    const date = new Date(params).toLocaleDateString().split("/");
+    const monthString = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+    const [month, day, year] = date;
+    return `${day}-${monthString[parseInt(month) - 1]}-${year}`;
+  } else {
+    return params;
+  }
 }
 
-export function mappingToDataEditParams(params : DataTableResult) : DataEditParams {
-  const {unitKerja, jabatanId, jabatan, gender, ...rest} = params
-  console.log(unitKerja,jabatan,jabatanId,gender)
+export function mappingToDataEditParams(params: DataTableResult): DataEditParams {
+  const { unitKerja, jabatanId, jabatan, gender, ...rest } = params;
+  console.log(unitKerja, jabatan, jabatanId, gender);
   return {
     ...rest,
-    unitId : rest.unitId ?? null
-  }
+    unitId: rest.unitId ?? null,
+  };
 }
