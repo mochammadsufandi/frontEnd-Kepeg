@@ -12,10 +12,12 @@ import { AppDispatch } from "../lib/store";
 import { useDispatch } from "react-redux";
 import { switchNIP, switchNIPEdit } from "../lib/features/uniqueIDSlicing";
 import {
+  deletePersonnelMultiple,
   editPersonnelMultiple,
   markPersonnelMultiple,
 } from "../lib/features/personnel/multiplePersonnelSlicing";
 import {
+  deletePersonnelSingle,
   editPersonnelSingle,
   markPersonnelSingle,
 } from "../lib/features/personnel/singlePersonnelSlicing";
@@ -24,6 +26,7 @@ import Modal from "../components/modal";
 import { exportToWord } from "@/utils/fetchAPI/exportFile";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { deletePersonnel } from "@/utils/fetchAPI/deletePersonnel";
 
 const ResultExport = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -135,6 +138,27 @@ const ResultExport = () => {
     router.push("/edit");
   }
 
+  async function onDeletePersonnel() {
+    try {
+      const { responseData, status } = await deletePersonnel(NIP);
+      if (typeData === "multiple" && statusMultiple === "success") {
+        dispatch(deletePersonnelMultiple(NIP));
+      }
+      if (typeData === "single" && statusSingle === "success") {
+        dispatch(deletePersonnelSingle());
+      }
+      if (status === 200) {
+        setStatusToast("success");
+      } else {
+        setStatusToast("error");
+      }
+      setMessageToast(responseData.message as string);
+      showToast();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div>
       <Navbar />
@@ -236,6 +260,7 @@ const ResultExport = () => {
             onSwitchNIPEdit={onSwitchNIPEdit}
             onMarkPersonnel={onMarkPersonnel}
             onEditPersonnel={onEditPersonnel}
+            onDeletePersonnel={onDeletePersonnel}
           />
         ) : typeData === "single" && statusSingle === "error" ? (
           <TableResult
@@ -254,6 +279,7 @@ const ResultExport = () => {
             onSwitchNIPEdit={onSwitchNIPEdit}
             onMarkPersonnel={onMarkPersonnel}
             onEditPersonnel={onEditPersonnel}
+            onDeletePersonnel={onDeletePersonnel}
           />
         ) : (
           <TableResult

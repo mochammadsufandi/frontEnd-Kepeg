@@ -86,6 +86,13 @@ const multiplePersonnelSlicing = createSlice({
         ),
       };
     },
+    deletePersonnelMultiple(state, actions: PayloadAction<string>) {
+      const NIP = actions.payload;
+      return {
+        ...state,
+        data: state.data.filter((value) => value.NIP !== NIP),
+      };
+    },
   },
 });
 
@@ -95,5 +102,6 @@ export const {
   markPersonnelMultiple,
   editPersonnelMultiple,
   changePersonnelAfterEditMultiple,
+  deletePersonnelMultiple,
 } = multiplePersonnelSlicing.actions;
 export default multiplePersonnelSlicing.reducer;

@@ -80,6 +80,12 @@ const singlePersonnelSlice = createSlice({
         data: actions.payload,
       };
     },
+    deletePersonnelSingle(state) {
+      return {
+        ...state,
+        data: {} as DataTableResult,
+      };
+    },
   },
 });
 
@@ -89,5 +95,6 @@ export const {
   markPersonnelSingle,
   editPersonnelSingle,
   changePersonnelAfterEditSingle,
+  deletePersonnelSingle,
 } = singlePersonnelSlice.actions;
 export default singlePersonnelSlice.reducer;
