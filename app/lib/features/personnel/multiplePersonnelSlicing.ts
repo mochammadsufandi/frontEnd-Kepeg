@@ -93,6 +93,18 @@ const multiplePersonnelSlicing = createSlice({
         data: state.data.filter((value) => value.NIP !== NIP),
       };
     },
+    checkPositionDurationMultiple(
+      state,
+      actions: PayloadAction<{ NIP: string; duration: string }>
+    ) {
+      const { NIP, duration } = actions.payload;
+      return {
+        ...state,
+        data: state.data.map((value) =>
+          value.NIP === NIP ? { ...value, durasiJabatan: duration } : { ...value }
+        ),
+      };
+    },
   },
 });
 
@@ -103,5 +115,6 @@ export const {
   editPersonnelMultiple,
   changePersonnelAfterEditMultiple,
   deletePersonnelMultiple,
+  checkPositionDurationMultiple,
 } = multiplePersonnelSlicing.actions;
 export default multiplePersonnelSlicing.reducer;

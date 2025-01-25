@@ -12,11 +12,13 @@ import { AppDispatch } from "../lib/store";
 import { useDispatch } from "react-redux";
 import { switchNIP, switchNIPEdit } from "../lib/features/uniqueIDSlicing";
 import {
+  checkPositionDurationMultiple,
   deletePersonnelMultiple,
   editPersonnelMultiple,
   markPersonnelMultiple,
 } from "../lib/features/personnel/multiplePersonnelSlicing";
 import {
+  checkPositionDurationSingle,
   deletePersonnelSingle,
   editPersonnelSingle,
   markPersonnelSingle,
@@ -27,6 +29,7 @@ import { exportToWord } from "@/utils/fetchAPI/exportFile";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { deletePersonnel } from "@/utils/fetchAPI/deletePersonnel";
+import { checkPositionDuration } from "@/utils/fetchAPI/checkPositionDuration";
 
 const ResultExport = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -159,6 +162,27 @@ const ResultExport = () => {
     }
   }
 
+  async function onCheckPositionDuration(NIP: string) {
+    try {
+      const { responseData, status } = await checkPositionDuration(NIP);
+      if (typeData === "multiple" && statusMultiple === "success") {
+        dispatch(checkPositionDurationMultiple({ NIP, duration: responseData.duration as string }));
+      }
+      if (typeData === "single" && statusSingle === "success") {
+        dispatch(checkPositionDurationSingle(responseData.duration as string));
+      }
+      if (status === 200) {
+        setStatusToast("success");
+      } else {
+        setStatusToast("error");
+      }
+      setMessageToast(responseData.message as string);
+      showToast();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div>
       <Navbar />
@@ -261,6 +285,7 @@ const ResultExport = () => {
             onMarkPersonnel={onMarkPersonnel}
             onEditPersonnel={onEditPersonnel}
             onDeletePersonnel={onDeletePersonnel}
+            onCheckPositionDuration={onCheckPositionDuration}
           />
         ) : typeData === "single" && statusSingle === "error" ? (
           <TableResult
@@ -280,6 +305,7 @@ const ResultExport = () => {
             onMarkPersonnel={onMarkPersonnel}
             onEditPersonnel={onEditPersonnel}
             onDeletePersonnel={onDeletePersonnel}
+            onCheckPositionDuration={onCheckPositionDuration}
           />
         ) : (
           <TableResult
