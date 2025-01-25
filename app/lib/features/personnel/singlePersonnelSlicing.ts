@@ -86,6 +86,15 @@ const singlePersonnelSlice = createSlice({
         data: {} as DataTableResult,
       };
     },
+    checkPositionDurationSingle(state, actions: PayloadAction<string>) {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          durasiJabatan: actions.payload,
+        },
+      };
+    },
   },
 });
 
@@ -96,5 +105,6 @@ export const {
   editPersonnelSingle,
   changePersonnelAfterEditSingle,
   deletePersonnelSingle,
+  checkPositionDurationSingle,
 } = singlePersonnelSlice.actions;
 export default singlePersonnelSlice.reducer;

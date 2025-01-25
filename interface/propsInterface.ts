@@ -107,6 +107,7 @@ export type DataTableResult = {
   marker: boolean;
   keteranganTambahan: string;
   namaJabatan: string;
+  durasiJabatan?: string;
   unitId: number | null;
   jabatanId: number | null;
   jabatan: {
