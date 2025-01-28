@@ -134,6 +134,34 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
       </>
     );
   }
+  if (params === "eselon") {
+    const data = [
+      { name: "I/a", value: "I/a" },
+      { name: "I/b", value: "I/b" },
+      { name: "II/a", value: "II/a" },
+      { name: "II/b", value: "II/b" },
+      { name: "III/a", value: "III/a" },
+      { name: "III/b", value: "III/b" },
+      { name: "IV/a", value: "IV/a" },
+      { name: "IV/b", value: "IV/a" },
+      { name: "V/a", value: "V/a" },
+      { name: "V/b", value: "V/b" },
+    ];
+    return (
+      <>
+        <label className="block text-sm font-medium text-whiteText">
+          {converterFieldToNameButton(params)}
+        </label>
+        <DropDown
+          name={params}
+          data={data}
+          onChange={onChangeField}
+          disabled={disabled}
+          required={false}
+        ></DropDown>
+      </>
+    );
+  }
   if (params === "unitId") {
     const data = [
       { name: "Kejati Jambi", value: "1" },
@@ -197,6 +225,8 @@ export function converterFieldToNameButton(params: string): string {
       return "Pangkat";
     case "originalRank":
       return "Pangkat";
+    case "eselon":
+      return "Eselon";
     case "pangkatSejak":
       return "Pangkat Sejak";
     case "jabatanSejak":

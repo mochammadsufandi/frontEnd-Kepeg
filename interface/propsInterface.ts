@@ -3,6 +3,7 @@ export type FilterFields = {
   tempatLahir?: string;
   tanggalLahir?: string;
   originalRank?: string;
+  eselon?: string;
   pangkatSejak?: string;
   jabatanSejak?: string;
   PNSSejak?: string;
@@ -95,6 +96,7 @@ export type DataTableResult = {
   tempatLahir: string;
   tanggalLahir: string;
   originalRank: string;
+  eselon: string;
   pangkatSejak: string;
   jabatanSejak: string;
   PNSSejak: string;

@@ -84,6 +84,9 @@ const TableResult = ({
               Keterangan
             </th>
             <th scope="col" className="px-6 py-3">
+              Eselon
+            </th>
+            <th scope="col" className="px-6 py-3">
               Marker
             </th>
             <th scope="col" className="px-6 py-3">
@@ -144,6 +147,9 @@ const TableResult = ({
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div>{value.keterangan}</div>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <div>{value.eselon}</div>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button
