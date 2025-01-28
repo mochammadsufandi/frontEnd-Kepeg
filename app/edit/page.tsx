@@ -259,6 +259,28 @@ const Edit = () => {
     },
     {
       data: [
+        { name: "I/a", value: "I/a" },
+        { name: "I/b", value: "I/b" },
+        { name: "II/a", value: "II/a" },
+        { name: "II/b", value: "II/b" },
+        { name: "III/a", value: "III/a" },
+        { name: "III/b", value: "III/b" },
+        { name: "IV/a", value: "IV/a" },
+        { name: "IV/b", value: "IV/a" },
+        { name: "V/a", value: "V/a" },
+        { name: "V/b", value: "V/b" },
+      ],
+      disabled: false,
+      name: "eselon",
+      defaultValue: {
+        name: "eselon",
+        value: formData.eselon ?? "",
+      },
+      required: false,
+      onChange: onChangeHandlerDropdown,
+    },
+    {
+      data: [
         { name: "true", value: "true" },
         { name: "false", value: "false" },
       ],

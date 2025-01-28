@@ -13,6 +13,7 @@ export default function FilterFieldDropDown({
     "tempatLahir",
     "tanggalLahir",
     "originalRank",
+    "eselon",
     "pangkatSejak",
     "jabatanSejak",
     "PNSSejak",
