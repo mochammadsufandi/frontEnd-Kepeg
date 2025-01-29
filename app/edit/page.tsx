@@ -312,7 +312,16 @@ const Edit = () => {
       data: [
         { name: "Kejati Jambi", value: "1" },
         { name: "Kejari Jambi", value: "2" },
-        { name: "Kejari Muaro Jambi", value: "3" },
+        { name: "Kejari Batanghari", value: "3" },
+        { name: "Kejari Bungo", value: "4" },
+        { name: "Kejari Sungai Penuh", value: "5" },
+        { name: "Kejari Merangin", value: "6" },
+        { name: "Kejari Tanjung Jabung Barat", value: "7" },
+        { name: "Kejari Sarolangun", value: "8" },
+        { name: "Kejari Tebo", value: "9" },
+        { name: "Kejari Muaro Jambi", value: "10" },
+        { name: "Kejari Tanjung Jabung Timur", value: "11" },
+        { name: "Cabjari Batanghari Muara Tembesi", value: "12" },
       ],
       disabled: false,
       defaultValue: {
