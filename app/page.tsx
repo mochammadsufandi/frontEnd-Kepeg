@@ -18,7 +18,7 @@ export default function Home() {
     <div>
       <Navbar />
       <div className="pt-[7rem] pb-[2rem] flex justify-evenly">
-        <Image src={"/images/kejaksaan.svg"} alt="logo-kejaksaan" width={240} height={240}></Image>
+        <Image src={"/images/Kejaksaan_Agung_Republik_Indonesia_new_logo.png"} alt="logo-kejaksaan" width={240} height={240}></Image>
         <div className="font-bold text-center w-[50%]">
           <TypeEffect
             strArray={["LAPTRI", 1000, nowDay, 1000]}
