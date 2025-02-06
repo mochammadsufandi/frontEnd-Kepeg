@@ -58,7 +58,10 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
   if (params === "pendidikanTerakhir") {
     const data = [
       { name: "SMA", value: "SMA" },
-      { name: "DIII", value: "DIII" },
+      { name: "SMU", value: "SMU" },
+      { name: "SMK", value: "SMK" },
+      { name: "D.III", value: "D.III" },
+      { name: "A.Md", value: "A.Md" },
       { name: "DIV", value: "DIV" },
       { name: "Sarjana", value: "S." },
       { name: "Magister", value: "M." },
