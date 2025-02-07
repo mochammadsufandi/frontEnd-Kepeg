@@ -13,6 +13,9 @@ RUN npm install
 # Copy all files to the container
 COPY . .
 
+# Force Tailwind to generate CSS
+RUN npx tailwindcss -o public/tailwind.css
+
 # Build the Next.js app
 RUN npm run build
 
