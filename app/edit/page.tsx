@@ -149,7 +149,7 @@ const Edit = () => {
       value: formData.tanggalLahir ? formatDateInput(formData.tanggalLahir) : "",
       type: "date",
       placeholder: "",
-      required: true,
+      required: false,
       onChange: onChangeHandlerInput,
     },
     {
@@ -158,7 +158,7 @@ const Edit = () => {
       value: formData.pangkatSejak ? formatDateInput(formData.pangkatSejak) : "",
       type: "date",
       placeholder: "",
-      required: true,
+      required: false,
       onChange: onChangeHandlerInput,
     },
     {
@@ -185,7 +185,7 @@ const Edit = () => {
       value: formData.jabatanSejak ? formatDateInput(formData.jabatanSejak) : "",
       type: "date",
       placeholder: "",
-      required: true,
+      required: false,
       onChange: onChangeHandlerInput,
     },
     {
@@ -194,7 +194,7 @@ const Edit = () => {
       value: formData.PNSSejak ? formatDateInput(formData.PNSSejak) : "",
       type: "date",
       placeholder: "",
-      required: true,
+      required: false,
       onChange: onChangeHandlerInput,
     },
     {
@@ -203,7 +203,7 @@ const Edit = () => {
       value: formData.jaksaSejak ? formatDateInput(formData.jaksaSejak) : "",
       type: "date",
       placeholder: "",
-      required: true,
+      required: false,
       onChange: onChangeHandlerInput,
     },
     {
