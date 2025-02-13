@@ -222,7 +222,9 @@ const ResultExport = () => {
                 ? Object.keys(filterFieldMultiple).map((value, idx) => {
                     return (
                       <p key={idx} className="m-[0.5rem]">
-                        {`${converterFieldToNameButton(value)} : ${filterFieldMultiple[value]}`}
+                        {value !== "numericRank"
+                          ? `${converterFieldToNameButton(value)} : ${filterFieldMultiple[value]}`
+                          : ""}
                       </p>
                     );
                   })

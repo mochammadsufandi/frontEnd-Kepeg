@@ -82,10 +82,14 @@ const Edit = () => {
       setMessageToast(responseData.message as string);
       setFormData({} as DataTableResult);
       if (typeData === "multiple") {
-        dispatch(changePersonnelAfterEditMultiple(formData));
+        dispatch(
+          changePersonnelAfterEditMultiple({
+            DataTableResult: formData,
+            NIPEdit: NIP,
+          })
+        );
         dispatch(editPersonnelMultiple(""));
       }
-      console.log(typeData);
       if (typeData === "single") {
         dispatch(changePersonnelAfterEditSingle(formData));
         dispatch(editPersonnelSingle(""));
