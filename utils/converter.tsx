@@ -102,25 +102,25 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
       </>
     );
   }
-  if (params === "originalRank") {
+  if (params === "numericRank") {
     const data = [
-      { name: "IV/e", value: "IV/e" },
-      { name: "IV/d", value: "IV/d" },
-      { name: "IV/c", value: "IV/c" },
-      { name: "IV/b", value: "IV/b" },
-      { name: "IV/a", value: "IV/a" },
-      { name: "III/d", value: "III/d" },
-      { name: "III/c", value: "III/c" },
-      { name: "III/b", value: "III/b" },
-      { name: "III/a", value: "III/a" },
-      { name: "II/d", value: "II/d" },
-      { name: "II/c", value: "II/c" },
-      { name: "II/b", value: "II/b" },
-      { name: "II/a", value: "II/a" },
-      { name: "I/d", value: "I/d" },
-      { name: "I/c", value: "I/c" },
-      { name: "I/b", value: "I/b" },
-      { name: "I/a", value: "I/a" },
+      { name: "IV/e", value: "(IV/e)" },
+      { name: "IV/d", value: "(IV/d)" },
+      { name: "IV/c", value: "(IV/c)" },
+      { name: "IV/b", value: "(IV/b)" },
+      { name: "IV/a", value: "(IV/a)" },
+      { name: "III/d", value: "(III/d)" },
+      { name: "III/c", value: "(III/c)" },
+      { name: "III/b", value: "(III/b)" },
+      { name: "III/a", value: "(III/a)" },
+      { name: "II/d", value: "(II/d)" },
+      { name: "II/c", value: "(II/c)" },
+      { name: "II/b", value: "(II/b)" },
+      { name: "II/a", value: "(II/a)" },
+      { name: "I/d", value: "(I/d)" },
+      { name: "I/c", value: "(I/c)" },
+      { name: "I/b", value: "(I/b)" },
+      { name: "I/a", value: "(I/a)" },
     ];
     return (
       <>
@@ -195,8 +195,29 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
       </>
     );
   }
+  if (params === "keterangan") {
+    const data = [
+      { name: "Jaksa", value: "Jaksa" },
+      { name: "TU", value: "TU" },
+      { name: "CPNS", value: "CPNS" },
+    ];
+    return (
+      <>
+        <label className="block text-sm font-medium text-whiteText">
+          {converterFieldToNameButton(params)}
+        </label>
+        <DropDown
+          name={params}
+          data={data}
+          onChange={onChangeField}
+          disabled={disabled}
+          required={false}
+        ></DropDown>
+      </>
+    );
+  }
 
-  if (params === "tempatLahir" || params === "keterangan" || params === "keteranganTambahan") {
+  if (params === "tempatLahir" || params === "keteranganTambahan" || "namaJabatan") {
     return (
       <>
         <label className="block text-sm font-medium text-whiteText">
@@ -241,6 +262,8 @@ export function converterFieldToNameButton(params: string): string {
       return "Eselon";
     case "pangkatSejak":
       return "Pangkat Sejak";
+    case "namaJabatan":
+      return "Nama Jabatan";
     case "jabatanSejak":
       return "Jabatan Sejak";
     case "PNSSejak":
@@ -293,10 +316,11 @@ export function converterToDate(params: string) {
 }
 
 export function mappingToDataEditParams(params: DataTableResult): DataEditParams {
-  const { unitKerja, jabatanId, jabatan, gender, ...rest } = params;
-  console.log(unitKerja, jabatan, jabatanId, gender);
+  const { unitKerja, jabatanId, jabatan, gender, jaksa, durasiJabatan, ...rest } = params;
+  console.log(unitKerja, jabatan, jabatanId, gender, durasiJabatan);
   return {
     ...rest,
+    jaksa,
     unitId: rest.unitId ?? null,
   };
 }

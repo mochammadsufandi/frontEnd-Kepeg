@@ -76,9 +76,12 @@ const multiplePersonnelSlicing = createSlice({
         };
       }
     },
-    changePersonnelAfterEditMultiple(state, actions: PayloadAction<DataTableResult>) {
-      const NIP = actions.payload.NIP;
-      const personnel = actions.payload;
+    changePersonnelAfterEditMultiple(
+      state,
+      actions: PayloadAction<{ DataTableResult: DataTableResult; NIPEdit: string }>
+    ) {
+      const NIP = actions.payload.NIPEdit;
+      const personnel = actions.payload.DataTableResult;
       return {
         ...state,
         data: state.data.map((value) =>

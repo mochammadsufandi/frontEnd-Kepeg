@@ -3,8 +3,10 @@ export type FilterFields = {
   tempatLahir?: string;
   tanggalLahir?: string;
   originalRank?: string;
+  numericRank?: string;
   eselon?: string;
   pangkatSejak?: string;
+  namaJabatan?: string;
   jabatanSejak?: string;
   PNSSejak?: string;
   pendidikanTerakhir?: string;
