@@ -9,6 +9,7 @@ export default function SortFieldDropDown({
 }: DropDownSelectSortField) {
   const [isOpen, setIsOpen] = useState(false);
   const filters = [
+    "id",
     "nama",
     "tanggalLahir",
     "tempatLahir",
