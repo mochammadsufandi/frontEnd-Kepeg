@@ -62,7 +62,7 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
       { name: "SMK", value: "SMK" },
       { name: "D.III", value: "D.III" },
       { name: "A.Md", value: "A.Md" },
-      { name: "DIV", value: "DIV" },
+      { name: "D.IV", value: "D.IV" },
       { name: "Sarjana", value: "S." },
       { name: "Magister", value: "M." },
       { name: "Doktor", value: "Dr." },
@@ -147,8 +147,7 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
       { name: "III/b", value: "III/b" },
       { name: "IV/a", value: "IV/a" },
       { name: "IV/b", value: "IV/a" },
-      { name: "V/a", value: "V/a" },
-      { name: "V/b", value: "V/b" },
+      { name: "V", value: "V" },
     ];
     return (
       <>
@@ -179,6 +178,8 @@ export function renderFilterField({ params, onChangeField, disabled }: RenderFie
       { name: "Kejari Muaro Jambi", value: "10" },
       { name: "Kejari Tanjung Jabung Timur", value: "11" },
       { name: "Cabjari Batanghari Muara Tembesi", value: "12" },
+      { name: "Cabjari Tanjung Jabung Timur Nipah Panjang", value: "13" },
+      { name: "PPPK", value: "14" },
     ];
     return (
       <>
@@ -246,6 +247,8 @@ export function converterFieldToNameButton(params: string): string {
       return "NRP";
     case "NIP/NRP":
       return "NIP/NRP";
+    case "id":
+      return "ID";
     case "nama":
       return "Nama";
     case "gender":

@@ -24,16 +24,16 @@ const CustomInput = ({
         placeholder={placeholder}
         required={required}
         value={value}
-        minLength={field === "NIP" ? 18 : field === "NRP" ? 8 : 1}
+        minLength={field === "NIP" ? 18 : field === "NRP" ? 6 : 1}
         min={0}
         onChange={(ev) => {
           const inputValue = ev.target.value;
           if (type === "number") {
             const length = inputValue.length;
-            if ((field === "NIP" && length !== 18) || (field === "NRP" && length !== 8)) {
+            if ((field === "NIP" && length !== 18) || (field === "NRP" && length < 6)) {
               ev.target.setCustomValidity(
                 `The ${field} field must have  ${
-                  field === "NIP" ? 18 : 8
+                  field === "NIP" ? 18 : "minimum 6"
                 } characters (you are currently using ${length})`
               );
             } else {
