@@ -6,7 +6,7 @@ import { Navbar } from "../components/navbar";
 import { AppDispatch, RootState } from "../lib/store";
 import { DataTableResult, DropDownObject } from "@/interface/propsInterface";
 import { useEffect, useState } from "react";
-import { mappingToDataEditParams } from "@/utils/converter";
+import { mappingToDataEditParams, originalRankFullConverter } from "@/utils/converter";
 import { editPersonnel } from "@/utils/fetchAPI/editPersonnel";
 import Toast from "../components/toast";
 import { useDispatch } from "react-redux";
@@ -54,6 +54,25 @@ const Edit = () => {
       ...prevState,
       [name]: value === "true" ? true : value === "false" ? false : value,
     }));
+
+    if (name === "jaksa" && formData.jaksa?.toString() !== value) {
+      setFormData((prevState) => ({
+        ...prevState,
+        originalRank: originalRankFullConverter({
+          jaksa: prevState.jaksa,
+          originalRank: prevState.originalRank.match(/\(.*?\)/g)?.[0] as string,
+        }),
+      }));
+    }
+    if (name === "originalRank" && formData.originalRank !== value) {
+      setFormData((prevState) => ({
+        ...prevState,
+        originalRank: originalRankFullConverter({
+          jaksa: prevState.jaksa,
+          originalRank: prevState.originalRank.match(/\(.*?\)/g)?.[0] as string,
+        }),
+      }));
+    }
   }
   function formatDateInput(date: string | Date) {
     const d = new Date(date);

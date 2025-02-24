@@ -327,3 +327,76 @@ export function mappingToDataEditParams(params: DataTableResult): DataEditParams
     unitId: rest.unitId ?? null,
   };
 }
+
+export function originalRankFullConverter({
+  jaksa,
+  originalRank,
+}: {
+  jaksa: boolean;
+  originalRank: string;
+}): string {
+  let result: string;
+  if (jaksa) {
+    switch (originalRank) {
+      case "(IV/d)":
+        result = "Jaksa Utama Madya (IV/d)";
+        break;
+      case "(IV/c)":
+        result = "Jaksa Utama Muda (IV/c)";
+        break;
+      case "(IV/b)":
+        result = "Jaksa Utama Pratama (IV/b)";
+        break;
+      case "(IV/a)":
+        result = "Jaksa Madya (IV/a)";
+        break;
+      case "(III/d)":
+        result = "Jaksa Muda (III/d)";
+        break;
+      case "(III/c)":
+        result = "Jaksa Pratama (III/c)";
+        break;
+      case "(III/b)":
+        result = "Ajun Jaksa (III/b)";
+        break;
+      case "(III/a)":
+        result = "Ajun Jaksa Madya (III/a)";
+        break;
+      default:
+        result = originalRank;
+    }
+  } else {
+    switch (originalRank) {
+      case "(IV/a)":
+        result = "Adi Wira (IV/a)";
+        break;
+      case "(III/d)":
+        result = "Sena Wira (III/d)";
+        break;
+      case "(III/c)":
+        result = "Madya Wira (III/c)";
+        break;
+      case "(III/b)":
+        result = "Muda Wira (III/b)";
+        break;
+      case "(III/a)":
+        result = "Yuana Wira (III/a)";
+        break;
+      case "(II/d)":
+        result = "Sena Darma (II/d)";
+        break;
+      case "(II/c)":
+        result = "Madya Darma (II/c)";
+        break;
+      case "(II/b)":
+        result = "Muda Darma (II/b)";
+        break;
+      case "(II/a)":
+        result = "Yuana Darma (II/a)";
+        break;
+      default:
+        result = originalRank;
+    }
+  }
+  return result;
+}
